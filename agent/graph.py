@@ -1,4 +1,4 @@
-from ast import Lambda
+from ast import Lambda, mod
 import stat
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
@@ -8,13 +8,14 @@ from tools import *
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
 from langgraph.prebuilt import create_react_agent
+# from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
 
 load_dotenv()
 
 # set_debug(True)
 # set_verbose(True)
 
-llm = ChatGroq(model="openai/gpt-oss-120b")
+llm = ChatGroq(model="openai/gpt-oss-20b")
 
 class plannerState(TypedDict):
     user_prompt: str
@@ -101,6 +102,6 @@ graph.add_conditional_edges(
 workflow = graph.compile()
 
 result = workflow.invoke(
-    {"user_prompt": "Build a colourful modern todo app in html css and js"},
+    {"user_prompt": "build simple colorful calculator using html, css and js "},
     config={"recursion_limit": 100} 
 )
