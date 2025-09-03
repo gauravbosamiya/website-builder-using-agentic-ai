@@ -4,3 +4,4 @@ langchain-core
 langgraph
 pydantic
 python-dotenv
+streamlit
