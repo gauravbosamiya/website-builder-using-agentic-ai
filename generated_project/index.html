@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ColorfulTodo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="app.js"></script>
+</head>
+<body>
+    <!-- Header with app title and theme toggle -->
+    <header>
+        <h1>ColorfulTodo</h1>
+        <button id="theme-toggle" aria-label="Toggle theme">🌓</button>
+    </header>
+
+    <!-- Main Todo application container -->
+    <section class="todo-app">
+        <!-- Todo input form -->
+        <form id="todo-form">
+            <input id="new-todo" type="text" placeholder="What needs to be done?" required>
+            <button type="submit">Add</button>
+        </form>
+
+        <!-- List where todo items will be rendered -->
+        <ul id="todo-list" class="todo-list">
+            <!-- Dynamic todo items injected by app.js -->
+        </ul>
+
+        <!-- Footer with filters and clear completed button -->
+        <footer>
+            <div class="filters">
+                <button data-filter="all" class="filter active">All</button>
+                <button data-filter="active" class="filter">Active</button>
+                <button data-filter="completed" class="filter">Completed</button>
+            </div>
+            <button id="clear-completed">Clear Completed</button>
+        </footer>
+    </section>
+</body>
+</html>

@@ -1,11 +1,13 @@
-from gc import set_debug
-from langchain_core.globals import set_verbose
+from ast import Lambda
+import stat
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 from prompts import *
 from states import *
+from tools import *
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
+from langgraph.prebuilt import create_react_agent
 
 load_dotenv()
 
@@ -19,6 +21,7 @@ class plannerState(TypedDict):
     plan: Plan
     task_plan: TaskPlan
     code: str
+    coder_state: CoderState
 
 
 def planner(state:plannerState):
@@ -37,28 +40,67 @@ def architect(state:plannerState):
     return {"task_plan":response}
 
 def coder(state: plannerState):
-    steps = state["task_plan"].implementation_steps
-    current_step_idx = 0
-    current_task = steps[current_step_idx]
+    coder_state = state.get("coder_state")  
+    if coder_state is None:
+        coder_state =  CoderState(task_plan=state["task_plan"], current_step_idx=0)
+
+    steps = coder_state.task_plan.implementation_steps
+
+    if coder_state.current_step_idx >= len(steps):
+        return {"coder_state": coder_state, "status": "DONE"}
+
+
+    current_task = steps[coder_state.current_step_idx]
+
+    existing_content = read_file.invoke({"path": current_task.file_path})
+
+
     user_prompt = (
         f"Task : {current_task.task_description}\n"
+        f"File: {current_task.file_path}\n"
+        f"Existing content: \n{existing_content}\n"
+        "Use write_file(path, content) to save your changes"
     )
     system_prompt = coder_system_prompt()
-    response = llm.invoke(system_prompt + user_prompt)
-    return {"code":response.content}
+
+    tools = [read_file, write_file, list_files, get_current_directory]
+
+    react_agent = create_react_agent(
+        llm, tools
+    )
+    response = react_agent.invoke({
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+    })
+
+    coder_state.current_step_idx+=1
+    return {"coder_state": coder_state}
+
+def should_continue_coding(state: plannerState) -> str:
+    """Determine if coding should continue or end"""
+    return "END" if state.get("status") == "DONE" else "coder"
+
 
 
 graph = StateGraph(plannerState)
 graph.add_node("planner",planner)
 graph.add_node("architect", architect)
 graph.add_node("coder",coder)
+
 graph.add_edge(START, "planner")
 graph.add_edge("planner","architect")
 graph.add_edge("architect","coder")
-graph.add_edge("coder", END)
+graph.add_conditional_edges(
+    "coder", 
+    should_continue_coding, 
+    {"END": END, "coder": "coder"}
+)
 
 workflow = graph.compile()
 
-user_prompt = "create a simple calculator web application"
-result = workflow.invoke({"user_prompt":user_prompt})
-print(result)
+result = workflow.invoke(
+    {"user_prompt": "Build a colourful modern todo app in html css and js"},
+    config={"recursion_limit": 100} 
+)

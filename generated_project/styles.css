@@ -1,0 +1,315 @@
+/*
+    styles.css - Vibrant, responsive UI with light/dark themes for ColorfulTodo
+    Implements CSS variables, theme support, global reset, layout, component styles,
+    animations, and accessibility considerations.
+*/
+
+/* ---------------------------------------------------------------
+   1. CSS Variables & Theme Support
+   --------------------------------------------------------------- */
+:root {
+    /* Primary palette */
+    --color-primary: #ff6b6b;   /* vivid red */
+    --color-secondary: #4ecdc4; /* turquoise */
+    --color-accent: #ffe66d;    /* sunny yellow */
+
+    /* Light theme background & text */
+    --color-bg: #f5f5f5;
+    --color-text: #222222;
+
+    /* Transition duration */
+    --transition-duration: 0.3s;
+}
+
+/* Dark theme overrides */
+[data-theme="dark"] {
+    --color-bg: #1e1e1e;
+    --color-text: #f0f0f0;
+    /* Keep primary palette – it works on both backgrounds */
+}
+
+/* ---------------------------------------------------------------
+   2. Global Reset & Base Styles
+   --------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Global transition – disabled for reduced‑motion users later */
+    transition: background var(--transition-duration) ease, color var(--transition-duration) ease, transform var(--transition-duration) ease;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+/* ---------------------------------------------------------------
+   3. Layout & Responsiveness
+   --------------------------------------------------------------- */
+.todo-app {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    .todo-app {
+        padding: 0 1rem;
+    }
+    html {
+        font-size: 90%;
+    }
+}
+
+/* ---------------------------------------------------------------
+   4. Component Styles
+   --------------------------------------------------------------- */
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: var(--color-primary);
+    margin: 0;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: transform var(--transition-duration) ease;
+}
+
+#theme-toggle:hover {
+    transform: rotate(20deg);
+}
+
+#theme-toggle:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Input Form */
+#todo-form {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+#new-todo {
+    flex: 1;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid var(--color-secondary);
+    border-radius: 4px;
+    font-size: 1rem;
+    background: var(--color-bg);
+    color: var(--color-text);
+}
+
+#new-todo:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+}
+
+#new-todo::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    opacity: 0.7;
+}
+
+#todo-form button {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(45deg, var(--color-primary), var(--color-accent));
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
+}
+
+#todo-form button:hover {
+    transform: scale(1.05);
+}
+
+#todo-form button:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Todo List Items */
+.todo-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    background: var(--color-bg);
+    border-left: 4px solid var(--color-secondary);
+    border-radius: 4px;
+    transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
+}
+
+/* Priority colour – JS can set data‑priority="high|low|normal" */
+.todo-item[data-priority="high"] {
+    border-left-color: var(--color-primary);
+}
+
+.todo-item[data-priority="low"] {
+    border-left-color: var(--color-accent);
+}
+
+.todo-item:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: translateX(5px);
+}
+
+.todo-item .text {
+    flex: 1;
+    margin-left: 0.5rem;
+    word-break: break-word;
+}
+
+.todo-item.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+/* Drag‑and‑drop placeholder */
+.drag-placeholder {
+    border: 2px dashed var(--color-secondary);
+    background: rgba(0, 0, 0, 0.1);
+    height: 2.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+}
+
+/* Filters */
+footer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.filters {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.filters .filter {
+    background: none;
+    border: 1px solid var(--color-secondary);
+    color: var(--color-text);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background var(--transition-duration) ease, color var(--transition-duration) ease;
+}
+
+.filters .filter:hover,
+.filters .filter.active {
+    background: var(--color-secondary);
+    color: #fff;
+}
+
+#clear-completed {
+    align-self: flex-start;
+    background: var(--color-primary);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background var(--transition-duration) ease, transform var(--transition-duration) ease;
+}
+
+#clear-completed:hover {
+    background: #e05555;
+    transform: scale(1.03);
+}
+
+#clear-completed:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------
+   5. Animations
+   --------------------------------------------------------------- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+/* Classes that JS can toggle */
+.todo-item.enter {
+    animation: fadeIn var(--transition-duration) ease-out forwards;
+}
+
+.todo-item.exit {
+    animation: fadeOut var(--transition-duration) ease-out forwards;
+}
+
+/* ---------------------------------------------------------------
+   6. Accessibility
+   --------------------------------------------------------------- */
+/* Ensure focus visibility for interactive elements */
+button:focus,
+input:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* End of styles.css */
