@@ -1,45 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Colorful Todo App</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="calculator">
-        <div id="display" class="display" role="textbox" aria-readonly="true"></div>
-        <div class="buttons">
-            <div class="grid">
-                <!-- Row 1: Clear, Backspace, (, ) -->
-                <button id="btn-clear" data-action="clear" data-type="utility" data-key="Delete" aria-label="Clear" role="button">C</button>
-                <button id="btn-backspace" data-action="backspace" data-type="utility" data-key="Backspace" aria-label="Backspace" role="button">←</button>
-                <button id="btn-left-paren" data-action="paren" data-type="utility" data-value="(" data-key="BracketLeft" aria-label="Left parenthesis" role="button">(</button>
-                <button id="btn-right-paren" data-action="paren" data-type="utility" data-value=")" data-key="BracketRight" aria-label="Right parenthesis" role="button">)</button>
-                <!-- Row 2: 7 8 9 ÷ -->
-                <button id="btn-7" data-action="digit" data-type="digit" data-value="7" data-key="Digit7" aria-label="Seven" role="button">7</button>
-                <button id="btn-8" data-action="digit" data-type="digit" data-value="8" data-key="Digit8" aria-label="Eight" role="button">8</button>
-                <button id="btn-9" data-action="digit" data-type="digit" data-value="9" data-key="Digit9" aria-label="Nine" role="button">9</button>
-                <button id="btn-divide" data-action="operator" data-type="operator" data-value="÷" data-key="Slash" aria-label="Divide" role="button">÷</button>
-                <!-- Row 3: 4 5 6 × -->
-                <button id="btn-4" data-action="digit" data-type="digit" data-value="4" data-key="Digit4" aria-label="Four" role="button">4</button>
-                <button id="btn-5" data-action="digit" data-type="digit" data-value="5" data-key="Digit5" aria-label="Five" role="button">5</button>
-                <button id="btn-6" data-action="digit" data-type="digit" data-value="6" data-key="Digit6" aria-label="Six" role="button">6</button>
-                <button id="btn-multiply" data-action="operator" data-type="operator" data-value="×" data-key="Asterisk" aria-label="Multiply" role="button">×</button>
-                <!-- Row 4: 1 2 3 - -->
-                <button id="btn-1" data-action="digit" data-type="digit" data-value="1" data-key="Digit1" aria-label="One" role="button">1</button>
-                <button id="btn-2" data-action="digit" data-type="digit" data-value="2" data-key="Digit2" aria-label="Two" role="button">2</button>
-                <button id="btn-3" data-action="digit" data-type="digit" data-value="3" data-key="Digit3" aria-label="Three" role="button">3</button>
-                <button id="btn-subtract" data-action="operator" data-type="operator" data-value="-" data-key="Minus" aria-label="Subtract" role="button">-</button>
-                <!-- Row 5: 0 . = + -->
-                <button id="btn-0" data-action="digit" data-type="digit" data-value="0" data-key="Digit0" aria-label="Zero" role="button">0</button>
-                <button id="btn-decimal" data-action="digit" data-type="digit" data-value="." data-key="Period" aria-label="Decimal point" role="button">.</button>
-                <button id="btn-equals" data-action="equals" data-type="utility" data-key="Enter" aria-label="Equals" role="button">=</button>
-                <button id="btn-add" data-action="operator" data-type="operator" data-value="+" data-key="Equal" aria-label="Add" role="button">+</button>
-            </div>
-        </div>
-    </div>
-    <script src="app.js"></script>
+  <header class="app-header">
+    <h1>Colorful Todo</h1>
+  </header>
+
+  <section class="todo-input">
+    <form id="todo-form">
+      <input type="text" id="new-todo" placeholder="What needs to be done?" autocomplete="off" required />
+      <button type="submit">Add</button>
+    </form>
+  </section>
+
+  <section class="todo-list">
+    <ul id="todo-list"></ul>
+  </section>
+
+  <footer class="todo-filters">
+    <button class="filter-btn" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="active">Active</button>
+    <button class="filter-btn" data-filter="completed">Completed</button>
+  </footer>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

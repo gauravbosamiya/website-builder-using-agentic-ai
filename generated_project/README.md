@@ -1,50 +1,46 @@
-# ColorfulCalc
+# ColorfulTodoApp
 
-## 📖 Overview
-ColorfulCalc is a lightweight, **color‑coded** web calculator built with vanilla HTML, CSS and JavaScript.  It runs entirely in the browser, so there are no build steps or server‑side dependencies.  The goal is to provide a fast, accessible calculator that works on any modern desktop or mobile browser.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-## ✨ Features
-- **Basic arithmetic**: addition, subtraction, multiplication, division.
-- **Parentheses support** for complex expressions.
-- **Clear (C)** and **Backspace** for editing.
-- **Keyboard integration** – all keys work as expected.
-- **Responsive design** that adapts to small screens.
-- **Accessible**: ARIA attributes, role declarations, and semantic markup.
-- **Colorful UI**: each button type has a distinct color for quick visual identification.
+## Description
+A simple, colorful web‑based Todo app built with vanilla HTML, CSS, and JavaScript. It features localStorage persistence, responsive design, and a vibrant color scheme.
 
-## 🛠️ Tech Stack
-- **HTML5** – structure and semantic markup.
-- **CSS3** – styling, layout, and responsive design.
-- **Vanilla JavaScript** – event handling and calculator logic.
+## Tech Stack
+- **HTML5**
+- **CSS3** (custom properties, flexbox, media queries)
+- **JavaScript (ES6)**
 
-No frameworks or build tools are required.
+## Features
+- Add new todo items
+- Mark items as completed
+- Delete todo items
+- Filter view: All, Active, Completed
+- Responsive design with vibrant color scheme
+- Persist todos in `localStorage`
 
-## 🚀 Setup
+## Installation / Usage
 1. Clone or download the repository.
-2. Open `index.html` in any modern web browser (Chrome, Firefox, Edge, Safari, or mobile browsers).
-3. No build or installation steps are necessary.
+2. Open `index.html` in any modern browser.
+3. Interact with the UI – no build step required.
 
-## 🔧 Usage
-- **Mouse**: Click the buttons on the calculator.
-- **Keyboard**: Use the corresponding keys:
-  - Numbers: `0`‑`9`
-  - Operators: `+`, `-`, `*` (or `×`), `/` (or `÷`)
-  - Parentheses: `(` and `)`
-  - Decimal: `.`
-  - Clear: `Delete`
-  - Backspace: `Backspace`
-  - Equals: `Enter`
+## Project Structure
+```
+/index.html   – main markup and UI layout
+/styles.css   – styling and responsive layout
+/script.js    – application logic, CRUD, filtering, persistence
+/README.md    – this documentation
+```
 
-The calculator will display the current expression and the result when `=` is pressed.
+## Development Notes
+- The JavaScript file expects the HTML elements with IDs `todo-form`, `new-todo`, `todo-list` and class `filter-btn` as defined in `index.html`.
+- CSS custom properties control the color palette; modify them in `styles.css` to change the theme.
 
-## 🤝 Contribution Guidelines
-Feel free to submit issues or pull requests.  Please:
+## Contributing
 1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/your-feature`).
-3. Commit your changes with a clear message.
-4. Push and open a pull request.
+2. Create a new branch for your feature or bug‑fix.
+3. Make your changes, ensuring the existing functionality remains intact.
+4. Commit with clear messages and push to your fork.
+5. Open a pull request describing the changes and why they are beneficial.
 
-All contributions are welcome!
-
-## 📄 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## License
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.

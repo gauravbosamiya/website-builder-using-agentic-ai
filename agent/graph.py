@@ -15,7 +15,7 @@ load_dotenv()
 # set_debug(True)
 # set_verbose(True)
 
-llm = ChatGroq(model="openai/gpt-oss-20b")
+llm = ChatGroq(model="openai/gpt-oss-120b")
 
 class plannerState(TypedDict):
     user_prompt: str
@@ -102,6 +102,6 @@ graph.add_conditional_edges(
 workflow = graph.compile()
 
 result = workflow.invoke(
-    {"user_prompt": "build simple colorful calculator using html, css and js "},
-    config={"recursion_limit": 100} 
+    {"user_prompt": "build simple colorful todo app using html, css and js "},
+    config={"recursion_limit": 200} 
 )
