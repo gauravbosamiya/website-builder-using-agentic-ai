@@ -1,5 +1,3 @@
-from ast import Lambda, mod
-import stat
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 from prompts import *
@@ -8,12 +6,12 @@ from tools import *
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
 from langgraph.prebuilt import create_react_agent
-# from langchain_huggingface import HuggingFaceEndpoint, ChatHuggingFace
+from langchain.globals import set_debug, set_verbose
 
 load_dotenv()
 
-# set_debug(True)
-# set_verbose(True)
+set_debug(True)
+set_verbose(True)
 
 llm = ChatGroq(model="openai/gpt-oss-120b")
 
